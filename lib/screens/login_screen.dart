@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
+  //  تعرف ثابت  للشاشه الثانيه
+  static const String id = 'loginScreen';
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }

@@ -1,6 +1,12 @@
+import 'package:chatting/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'login_screen.dart';
+
 class WelcomeScreen extends StatefulWidget {
+  //  تعرف ثابت  للشاشه الاولي
+  static const String id = 'welcomeScreen';
+
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -44,9 +50,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: MaterialButton(
                   onPressed: () {
                     //Go to login screen.
-                    // زرار فتح الاميل يودي لصفحتها
+                    // تعديل التوجه للصفحه المناسبه
                     setState(() {
-                      Navigator.pushNamed(context,  '/login');
+                      Navigator.pushNamed(context,  LoginScreen.id);
                     });
                   },
                   minWidth: 200.0,
@@ -66,9 +72,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: MaterialButton(
                   onPressed: () {
                     //Go to registration screen.
-                    // زرار التسجيل يودي لصفحتها
                     setState(() {
-                      Navigator.pushNamed(context,  '/register');
+                      // تعديل التوجه للصفحه المناسبه
+                      Navigator.pushNamed(context,  RegistrationScreen.id);
                     });
                   },
                   minWidth: 200.0,

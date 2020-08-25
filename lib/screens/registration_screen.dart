@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
+  //  تعرف ثابت  للشاشه الثالثه
+  static const String id = 'registerScreen';
+
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }

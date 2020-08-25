@@ -16,7 +16,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
                   child: Image.asset('images/logo.png'),
@@ -43,10 +44,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: MaterialButton(
                   onPressed: () {
                     //Go to login screen.
-//                    // زرار فتح الاميل يودي لصفحتها
-//                    setState(() {
-//                      Navigator.pushNamed(context,  '/login');
-//                    });
+                    // زرار فتح الاميل يودي لصفحتها
+                    setState(() {
+                      Navigator.pushNamed(context,  '/login');
+                    });
                   },
                   minWidth: 200.0,
                   height: 42.0,
@@ -65,10 +66,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: MaterialButton(
                   onPressed: () {
                     //Go to registration screen.
-//                    // زرار التسجيل يودي لصفحتها
-//                    setState(() {
-//                      Navigator.pushNamed(context,  '/register');
-//                    });
+                    // زرار التسجيل يودي لصفحتها
+                    setState(() {
+                      Navigator.pushNamed(context,  '/register');
+                    });
                   },
                   minWidth: 200.0,
                   height: 42.0,

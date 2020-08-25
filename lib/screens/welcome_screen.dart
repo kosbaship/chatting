@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  //  تعرف ثابت  للشاشه الاولي
   static const String id = 'welcomeScreen';
 
   @override
@@ -25,9 +24,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  child: Image.asset('images/logo.png'),
-                  height: 60.0,
+                // بدايه صنع هيرو انيميشن
+                // اضافه الاداه المشتركه هنا في البدايه
+                Hero(
+                  tag: 'logo',
+                  child: Container(
+                    child: Image.asset('images/logo.png'),
+                    height: 60.0,
+                  ),
                 ),
                 Text(
                   'Chatting',
@@ -50,7 +54,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: MaterialButton(
                   onPressed: () {
                     //Go to login screen.
-                    // تعديل التوجه للصفحه المناسبه
                     setState(() {
                       Navigator.pushNamed(context,  LoginScreen.id);
                     });
@@ -73,7 +76,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   onPressed: () {
                     //Go to registration screen.
                     setState(() {
-                      // تعديل التوجه للصفحه المناسبه
                       Navigator.pushNamed(context,  RegistrationScreen.id);
                     });
                   },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-  //  تعرف ثابت  للشاشه الثانيه
   static const String id = 'loginScreen';
 
   @override
@@ -19,9 +18,13 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              height: 200.0,
-              child: Image.asset('images/logo.png'),
+            // اضافه الاداه المشتركه هنا في النهايه
+            Hero(
+              tag: 'logo',
+              child: Container(
+                height: 200.0,
+                child: Image.asset('images/logo.png'),
+              ),
             ),
             SizedBox(
               height: 48.0,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:chatting/constants.dart';
 
 class ChatScreen extends StatefulWidget {
-  //  تعرف ثابت  للشاشه الرابعه
   static const String id = 'chatScreen';
 
   @override

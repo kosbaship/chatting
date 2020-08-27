@@ -19,9 +19,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     super.initState();
 
     controller = AnimationController(
-      duration: Duration(milliseconds: 750),
+      duration: Duration(milliseconds: 1000),
       vsync: this,
-      // هنستخدم خاصيه ال ابر باوند انها تبق في مدي من صفر ل ١٠٠ بدل ما كانت افتراضيا من صفر لواحد
       upperBound: 100.0
     );
 
@@ -47,18 +46,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // بدايه صنع هيرو انيميشن
-                // اضافه الاداه المشتركه هنا في البدايه
                 Hero(
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: 60.0,
+                    // تغير الحجم
+                    height: controller.value,
                   ),
                 ),
                 Text(
-                  // هحوله لانجر علشان هو افتراديا دابل
-                  '${controller.value.toInt()}%',
+                  'Chatting',
                   style: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,

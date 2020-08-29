@@ -13,9 +13,6 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin {
 
   AnimationController controller;
-  //   التحكم في شكل الانميشن
-  // اضافه انميشن يتغير بشكل مختلف بدل الشكل الافقي الافتراضي
-  // اولا هنعرفه بالطريقه دي 
   Animation animation;
 
   @override
@@ -25,21 +22,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     controller = AnimationController(
       duration: Duration(milliseconds: 1000),
       vsync: this,
-      //upperBound: 100.0   <=== لازم الابر باوند ميبقاش اكبر من واحد اصلا متحدد علي الجراف ف الموقع
     );
 
-    // هنعمل تهيئه للكيرفد انيميشن لانها بتخلينا نستخدم اشكال كتير
-    // . بتاخد قيمتين الاولي بيبق انميشن كونترولر
-    // والتانيه نوع الكير اللي احنا عاوزين ننفذه
-    // https://api.flutter.dev/flutter/animation/Curves-class.html.
-    // معلومه كمان دا يعتبر طبقه هتتعرض فوق الكونترولر
     animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut);
-    
-    controller.forward();
+
+    // اعكس الانميشن انه يبدا من الحجم الكبير ويخفي
+    controller.reverse(from: 1.0);
 
     controller.addListener(() {
       setState(() {});
-      // الاستخدام بيتغير بنستخدم الشكل بدل الكونترولر
       print(animation.value);
     });
 
@@ -62,9 +53,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    // تغير الحجم
-                    // الاستخدام بيتغير بنستخدم الشكل بدل الكونترولر
-                    //  .التغير في الحجم من صفر لواحد مش هيبين حاجه لينا خالص خلينا نضربها في ميه
                     height: animation.value * 150,
                   ),
                 ),

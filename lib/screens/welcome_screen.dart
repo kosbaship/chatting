@@ -24,21 +24,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
       vsync: this,
     );
 
-    animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut);
+    // التوين انميشن
+    // وهو نوع من الاميشين اللي يتحرق بطريقه ثلثه بين  قيمتين
+    //https://api.flutter.dev/flutter/animation/Tween-class.html
+    animation = ColorTween(
+      begin: Colors.blueGrey,
+      end: Colors.white
+    ).animate(controller);
 
-    // اعكس الانميشن انه يبدا من الحجم الكبير ويخفي
     controller.forward();
 
-    // علشان نخلي الانميشن يلوب هنحتاج نعرف نهايته فين سواء لو فورورد او رفيرس
-    //هنضيف الدله دي تتصنت عليا لما يخلص
-    // نهايه الفورورد كومبليتيد ونهايت الرفيرس ديسميسد
-    animation.addStatusListener((status) {
-      if(status == AnimationStatus.completed ){
-        controller.reverse(from: 1.0);
-      } else if (status == AnimationStatus.dismissed){
-        controller.forward();
-      }
-    });
+
 
     controller.addListener(() {
       setState(() {});
@@ -58,7 +54,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //  هنعمل تست علي الخلفيه كلها هنا ف البيلد ميثود
+      backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -72,7 +69,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: animation.value * 150,
+                    height: 60.0,
                   ),
                 ),
                 Text(

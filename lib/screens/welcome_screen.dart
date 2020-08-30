@@ -48,6 +48,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    // حافظ علي مصادر الرامات بتاعتك لما تكون عامل للوب للانميشن
+    // لان لما الاسكرينه تتقفل الانميشن بيفضل شغال عادي ف الرام
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

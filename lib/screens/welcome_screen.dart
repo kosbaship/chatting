@@ -27,7 +27,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut);
 
     // اعكس الانميشن انه يبدا من الحجم الكبير ويخفي
-    controller.reverse(from: 1.0);
+    controller.forward();
+
+    // علشان نخلي الانميشن يلوب هنحتاج نعرف نهايته فين سواء لو فورورد او رفيرس
+    //هنضيف الدله دي تتصنت عليا لما يخلص
+    // نهايه الفورورد كومبليتيد ونهايت الرفيرس ديسميسد
+    animation.addStatusListener((status) {
+      if(status == AnimationStatus.completed ){
+        controller.reverse(from: 1.0);
+      } else if (status == AnimationStatus.dismissed){
+        controller.forward();
+      }
+    });
 
     controller.addListener(() {
       setState(() {});

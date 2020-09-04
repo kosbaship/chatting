@@ -1,6 +1,8 @@
 import 'package:chatting/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
-
+//ممكن انعمل بحث في الباكدجات بكلمه animate
+// هنيجي نعمل امبورت للباكدج بعد ما ضفناها ف المشورع
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -24,9 +26,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
       vsync: this,
     );
 
-    // التوين انميشن
-    // وهو نوع من الاميشين اللي يتحرق بطريقه ثلثه بين  قيمتين
-    //https://api.flutter.dev/flutter/animation/Tween-class.html
     animation = ColorTween(
       begin: Colors.blueGrey,
       end: Colors.white
@@ -46,15 +45,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   @override
   void dispose() {
     super.dispose();
-    // حافظ علي مصادر الرامات بتاعتك لما تكون عامل للوب للانميشن
-    // لان لما الاسكرينه تتقفل الانميشن بيفضل شغال عادي ف الرام
+
     controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //  هنعمل تست علي الخلفيه كلها هنا ف البيلد ميثود
       backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -72,9 +69,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                     height: 60.0,
                   ),
                 ),
-                Text(
-                  'Chatting',
-                  style: TextStyle(
+                // هنستخدم الاداه بتاعه الباكدج
+                TypewriterAnimatedTextKit(
+                  text: ['Chatting'],
+                  textStyle: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
                   ),

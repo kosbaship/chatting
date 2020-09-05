@@ -2,8 +2,6 @@ import 'package:chatting/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chatting/component/rounded_btn.dart';
 
-//ممكن انعمل بحث في الباكدجات بكلمه animate
-// هنيجي نعمل امبورت للباكدج بعد ما ضفناها ف المشورع
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'login_screen.dart';
 
@@ -35,7 +33,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     controller.addListener(() {
       setState(() {});
-      print(animation.value);
     });
   }
 
@@ -80,11 +77,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             SizedBox(
               height: 48.0,
             ),
-            // اول كنترول وكلك هيفعل الاوت لاين
-            // ثانيا هعمل اكستراكت ودجت لو اشتغلت هتعمل هيا ستات لس كلاس
-            // لو مشتغلتش هعمل انا اكستراكت ميثود هيديني الريتيرن بس
-            // وهعمل انا الاستات ليس كلاس بايدي واديله الريترن
-            // وابق انا امسح الست استات بنفسي
             RoundedButton(
               btnColor: Colors.lightBlueAccent,
               btnName: 'Log In',

@@ -19,7 +19,6 @@ const kMessageContainerDecoration = BoxDecoration(
 );
 
 
-// نقل الدكور بتاع التكست فيلد هنا
 const kTextFieldDecoration  = InputDecoration(
   hintText: 'Enter your value',
   hintStyle: TextStyle(

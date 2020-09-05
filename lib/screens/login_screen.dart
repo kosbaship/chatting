@@ -35,9 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 //Do something with the user input.
               },
-              // هنا فقط وبيكون متكرر لون النص اللي المستخدم بيكتبه
-              style: TextStyle(color: Colors.lightBlueAccent),
-              // كوبي وز بتخليني اعديل علي صفه معينه بعينها في حته محدده تخص القيم اللي انا نقلته كله
               decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your email',),
             ),
             SizedBox(
@@ -47,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 //Do something with the user input.
               },
-              style: TextStyle(color: Colors.lightBlueAccent),
               decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password'),
             ),
             SizedBox(

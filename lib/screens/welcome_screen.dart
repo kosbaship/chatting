@@ -1,5 +1,7 @@
 import 'package:chatting/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:chatting/rounded_btn.dart';
+
 //ممكن انعمل بحث في الباكدجات بكلمه animate
 // هنيجي نعمل امبورت للباكدج بعد ما ضفناها ف المشورع
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -12,8 +14,8 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin {
-
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
 
@@ -26,20 +28,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
       vsync: this,
     );
 
-    animation = ColorTween(
-      begin: Colors.blueGrey,
-      end: Colors.white
-    ).animate(controller);
+    animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
+        .animate(controller);
 
     controller.forward();
-
-
 
     controller.addListener(() {
       setState(() {});
       print(animation.value);
     });
-
   }
 
   @override
@@ -71,6 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                 ),
                 // هنستخدم الاداه بتاعه الباكدج
                 TypewriterAnimatedTextKit(
+                  speed: const Duration(milliseconds: 500), //use this to modify the speed
                   text: ['Chatting'],
                   textStyle: TextStyle(
                     fontSize: 45.0,
@@ -82,47 +80,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
             SizedBox(
               height: 48.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                elevation: 5.0,
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to login screen.
-                    setState(() {
-                      Navigator.pushNamed(context,  LoginScreen.id);
-                    });
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Log In',
-                  ),
-                ),
-              ),
+            // اول كنترول وكلك هيفعل الاوت لاين
+            // ثانيا هعمل اكستراكت ودجت لو اشتغلت هتعمل هيا ستات لس كلاس
+            // لو مشتغلتش هعمل انا اكستراكت ميثود هيديني الريتيرن بس
+            // وهعمل انا الاستات ليس كلاس بايدي واديله الريترن
+            // وابق انا امسح الست استات بنفسي
+            RoundedButton(
+              btnColor: Colors.lightBlueAccent,
+              btnName: 'Log In',
+              onPressed:  () {
+                //Go to login screen.
+                Navigator.pushNamed(context, LoginScreen.id);
+              },
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to registration screen.
-                    setState(() {
-                      Navigator.pushNamed(context,  RegistrationScreen.id);
-                    });
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Register',
-                  ),
-                ),
-              ),
+            RoundedButton(
+              btnColor: Colors.blueAccent,
+              btnName: 'Register',
+              onPressed:  () {
+                //Go to login screen.
+                Navigator.pushNamed(context, RegistrationScreen.id);
+              },
             ),
           ],
         ),
@@ -130,3 +107,4 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     );
   }
 }
+

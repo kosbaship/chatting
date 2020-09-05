@@ -1,6 +1,6 @@
 import 'package:chatting/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:chatting/rounded_btn.dart';
+import 'package:chatting/component/rounded_btn.dart';
 
 //ممكن انعمل بحث في الباكدجات بكلمه animate
 // هنيجي نعمل امبورت للباكدج بعد ما ضفناها ف المشورع

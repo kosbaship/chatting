@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chatting/component/rounded_btn.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registerScreen';
@@ -18,7 +19,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // اضافه الاداه المشتركه هنا في النهايه
             Hero(
               tag: 'logo',
               child: Container(
@@ -57,6 +57,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               onChanged: (value) {
                 //Do something with the user input.
               },
+              // دي اعدادات التكست فيلد
               decoration: InputDecoration(
                 hintText: 'Enter your password',
                 contentPadding:
@@ -64,10 +65,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(32.0)),
                 ),
+                // دا شكل الابلطيشن اول لما بيبدا
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
                   borderRadius: BorderRadius.all(Radius.circular(32.0)),
                 ),
+                // ودا شكله اول ما المستخدم يبدا يكتب فيه
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
                   borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -77,25 +80,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             SizedBox(
               height: 24.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Implement registration functionality.
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Register',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
+              RoundedButton(
+                btnName: 'Register',
+                btnColor: Colors.blueAccent,
+                onPressed: (){
+
+                },
+              )
           ],
         ),
       ),

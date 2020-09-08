@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "134625987751",
+    "firebase_url": "https://chattingapp-d91f7.firebaseio.com",
+    "project_id": "chattingapp-d91f7",
+    "storage_bucket": "chattingapp-d91f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134625987751:android:ac5fadde461dbf7b6e1f82",
+        "android_client_info": {
+          "package_name": "com.kosbaship.chatting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134625987751-jssdjpn0802sjtj1bmlndadu1vlltint.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9ggZcbprgmo9YFNEUJctSLXkBBqkxsL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134625987751-jssdjpn0802sjtj1bmlndadu1vlltint.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

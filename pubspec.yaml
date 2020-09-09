@@ -15,6 +15,11 @@ dependencies:
   firebase_core: ^0.5.0
   firebase_auth: ^0.18.0+1
   cloud_firestore: ^0.14.0+2
+#  a بعد اضافه الباكدجات للفاير بيز هنعمل رن للاوامر دي وقبلهم  install pod
+#  1  pod repo update
+#  2  sudo gem install cocoapods
+#  3  pod setup
+
 
 dev_dependencies:
   flutter_test:

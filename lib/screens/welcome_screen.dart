@@ -63,7 +63,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     height: 60.0,
                   ),
                 ),
-                // هنستخدم الاداه بتاعه الباكدج
                 TypewriterAnimatedTextKit(
                   speed: const Duration(milliseconds: 500), //use this to modify the speed
                   text: ['Chatting'],

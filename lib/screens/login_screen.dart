@@ -11,6 +11,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  // استقبل بيانات من المستخدم
+  // هنعمل لكل تكست فيد متغير
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,8 +37,13 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 48.0,
             ),
             TextField(
+              // خلي التكست يظهر ف النص
+              textAlign: TextAlign.center,
+              // خلي الكيبورد يبق بنفس نوق الدادا اللي هستقبلها
+              keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
-                //Do something with the user input.
+                // دي القيمه اللي جوه فيلد الاميل
+                email = value;
               },
               decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your email',),
             ),
@@ -41,8 +51,13 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 8.0,
             ),
             TextField(
+              // خلي الباسورد يبق محخفي
+              obscureText: true,
+              // خلي التكست يظهر ف النص
+              textAlign: TextAlign.center,
               onChanged: (value) {
-                //Do something with the user input.
+                // دي القيمه اللي جوا فيلد الباسورد
+                password = value;
               },
               decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password'),
             ),
@@ -53,7 +68,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 btnColor: Colors.lightBlueAccent,
                 btnName: 'Log In',
                 onPressed: (){
-
+                  // لما يضخط علي تسجيل اعرض القيمه ف اللوج
+                  print(email);
+                  print(password);
                 },
               )
                   ],

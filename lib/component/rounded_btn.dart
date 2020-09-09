@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 class RoundedButton extends StatelessWidget {
-  // هنا بستقبل كل الحاجات اللي هتتغير ف الاداه
-  // كل دا اتعمل ف مكانه هروح بق انقله ف كلاس لوحده وابق اعمل امبورت هنا
   RoundedButton({
     @required this.btnColor, @required  this.btnName, @required this.onPressed});
   final Color btnColor;

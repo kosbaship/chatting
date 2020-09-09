@@ -10,6 +10,12 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  // استقبل بيانات من المستخدم
+  // هنعمل لكل تكست فيد متغير
+  String email;
+  String password;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,17 +37,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 48.0,
             ),
             TextField(
+              // خلي التكست يظهر ف النص
+              textAlign: TextAlign.center,
+              // خلي الكيبورد يبق بنفس نوق الدادا اللي هستقبلها
+              keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
-                //Do something with the user input.
-              },
+                // دي القيمه اللي جوه فيلد الاميل
+                email = value;
+                },
               decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
             ),
             SizedBox(
               height: 8.0,
             ),
             TextField(
+              // خلي الباسورد يبق محخفي
+              obscureText: true,
+              // خلي التكست يظهر ف النص
+              textAlign: TextAlign.center,
               onChanged: (value) {
-                //Do something with the user input.
+                // دي القيمه اللي جوا فيلد الباسورد
+                  password = value;
               },
               decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password'),
             ),
@@ -52,6 +68,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 btnName: 'Register',
                 btnColor: Colors.blueAccent,
                 onPressed: (){
+                  // لما يضخط علي تسجيل اعرض القيمه ف اللوج
+                  print(email);
+                  print(password);
                 },
               )
           ],

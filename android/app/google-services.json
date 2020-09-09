@@ -30,6 +30,13 @@
             {
               "client_id": "134625987751-jssdjpn0802sjtj1bmlndadu1vlltint.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "134625987751-9koetah8e77cftelrod0gbu9nsoeinta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kosbaship.chatting"
+              }
             }
           ]
         }

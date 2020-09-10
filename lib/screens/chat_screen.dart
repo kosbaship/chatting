@@ -34,18 +34,23 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  // هعمل داله تجبلي الداتا (الرسايل) من الفاير استور
-  void getMessages() async {
-    // هحدد الكولكشن اللي انا عاوز اجيب منه الداتا
-    // السطر اللي جاي دا كاني ماسك كل الداتا اللي ف لكولكشن دا ف ايدي
-    final messg = await _fireStore.collection('messages').get();
-    // السطر اللي جاي دا هيجبلي ليسته من الدوكيونتس اللي هو العمود اللي ف النص ف الداتا بيز لو رحت اتفرج
-    // بما انها ليسته وانا عاوز اجيب منا حاجه محدده هستخدم فور لوب
-    for (var message in messg.docs){
-      // كل مسدج جوه الليسته دي عباره عن رساله واحده فقط
-      // الرساله مكونه من مرسل ونص
-      //الداتا دي هتجبلنا المفتاح والقيمه يعني مثلا كلمه سندر والقيمه بتاعتها
-      print(message.data());
+  // void getMessages() async {
+  //   final messg = await _fireStore.collection('messages').get();
+  //   for (var message in messg.docs){
+  //     print(message.data());
+  //   }
+  // }
+
+  // هستخدمها علشان اتصنت علي الرسايل اللي جايه من الفير بيز
+  void messageStreams() async{
+    // داله الاسناب شوت دي بتتصنط علي اللي بيحصل ف الكولكشن دا
+    //  احنا ممكن نتخيل الاستريمات دي كانها قايمه فا احنا هنلف جوا القايمه اللي كل شويه تتجدد دي
+    await for (var snapshot in _fireStore.collection('messages').snapshots() ){
+      // هنا بق انا بقلب جوه القايمه علشان اعرض كل ايتم جواها
+      // طبعا للتذكره القايمه دي بيضاف عليها اي ايتم جديد بيتحط ف الفاير استور
+        for (var message in snapshot.docs){
+          print(message.data());
+        }
     }
   }
 
@@ -59,7 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: Icon(Icons.close),
               onPressed: () {
                 // حطتها هنا من اجل التجربه فقط
-                getMessages();
+                messageStreams();
                 // _auth.signOut();
                 // Navigator.pop(context);
               }),

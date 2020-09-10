@@ -1,4 +1,3 @@
-// طبعا هروج اعمل كليكشن في الفاير استور علشان هحتاج اسمه هنا
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chatting/constants.dart';
@@ -13,11 +12,9 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
 
-  // هنعمل كائن من الفاير استور علشان نستخدمه
   final _fireStore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
-  // هعمل متغير يسيجل الرساله اللي المستخدم هيكتبها
   String messageText;
 
   @override
@@ -31,13 +28,27 @@ class _ChatScreenState extends State<ChatScreen> {
       final user = _auth.currentUser;
       if (user != null){
         loggedInUser = user;
-        // دا اليوزر الحالي
-        print(loggedInUser.email);
       }
     } catch (e) {
       print(e);
     }
   }
+
+  // هعمل داله تجبلي الداتا (الرسايل) من الفاير استور
+  void getMessages() async {
+    // هحدد الكولكشن اللي انا عاوز اجيب منه الداتا
+    // السطر اللي جاي دا كاني ماسك كل الداتا اللي ف لكولكشن دا ف ايدي
+    final messg = await _fireStore.collection('messages').get();
+    // السطر اللي جاي دا هيجبلي ليسته من الدوكيونتس اللي هو العمود اللي ف النص ف الداتا بيز لو رحت اتفرج
+    // بما انها ليسته وانا عاوز اجيب منا حاجه محدده هستخدم فور لوب
+    for (var message in messg.docs){
+      // كل مسدج جوه الليسته دي عباره عن رساله واحده فقط
+      // الرساله مكونه من مرسل ونص
+      //الداتا دي هتجبلنا المفتاح والقيمه يعني مثلا كلمه سندر والقيمه بتاعتها
+      print(message.data());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +58,10 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
+                // حطتها هنا من اجل التجربه فقط
+                getMessages();
+                // _auth.signOut();
+                // Navigator.pop(context);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -74,10 +87,6 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      // هنسجل الرساله ويوزر الحالي الاتنين ف الكلاود فاير استور
-                      // داله الاد بيتقبل ماب ولازم اخد بالي ان المفاتيح بنفس
-                      // الاسم اللي انا بداته هناك بايدي
-                      // فا انا هستخدم قوصين معكوفين علشا اعمل ماب
                       _fireStore.collection('messages').add({
                         'text': messageText,
                         'sender': loggedInUser.email

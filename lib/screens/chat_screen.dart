@@ -40,9 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                // عمل تسجيل خروق
                 _auth.signOut();
-                // هنقفل الاكتفتي الحاليه
                 Navigator.pop(context);
               }),
         ],

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chatting/component/rounded_btn.dart';
-// عاوز استخدم بروجرس بار يظهر والداتا بتحمل من النت
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../constants.dart';
@@ -18,16 +17,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   String email;
   String password;
-  // هعمل متغير قيمه افتراضيه انه يبق مخفي
   bool _showProgressSpinner = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // هخلي البدي بتاع الاسكافولد محاط بالاداه اللي انا لسا عاملها اكبورت في البب اسبيك دوت ياميل
       body: ModalProgressHUD(
-        // احط قيمته الافتراضيه هنا انه يبق واقف
         inAsyncCall: _showProgressSpinner,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -71,7 +67,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   btnColor: Colors.lightBlueAccent,
                   btnName: 'Log In',
                   onPressed:  () async{
-                    // اول لما المستخدم يسجل دخول اظهرله الروجرس بار
                     setState(() {
                       _showProgressSpinner = true;
                     });
@@ -80,7 +75,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (loginUser != null) {
                         Navigator.pushNamed(context, ChatScreen.id);
                       }
-                      // اول لما الداتا ترجع اخفيه تاني
                       setState(() {
                         _showProgressSpinner = false;
                       });

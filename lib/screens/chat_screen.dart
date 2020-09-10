@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:chatting/constants.dart';
-//بردو هعمل امبورت للاوثنتكيشن
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -13,20 +12,15 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
 
   final _auth = FirebaseAuth.instance;
-  // الاول كانت فايربيس يوزر اتغيرت بق كدا واوث ريزلت بردو بقت يوزر كريدنشيل
   User loggedInUser;
 
-  // هنوصل لليوزر دا اول ما نفتح البرنامج
   @override
   void initState() {
     super.initState();
     getCurrentUser();
   }
 
-  // هنعمل داله دورها انها تشوف هل في يوزر حالي عمل تسجيل دخول ولا لاء
   void getCurrentUser() {
-    // هنا بق نستقبل اليوزر اللي سجل دخول
-    // طبعا لازم هيرجع فيوتر لانها هتاخد وقت علي ما تيجي ف هنامن نفسنا
     try {
       final user = _auth.currentUser;
       if (user != null){

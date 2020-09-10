@@ -13,8 +13,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  // عمل firebase authentication
-  // هنعرف انستنس منه الكلاس
+  // هنعمل كائين من كلاس المصادقه علشان نستخدم دواله
   final _auth = FirebaseAuth.instance;
    String email;
   String password;
@@ -41,12 +40,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 48.0,
             ),
             TextField(
-              // خلي التكست يظهر ف النص
               textAlign: TextAlign.center,
-              // خلي الكيبورد يبق بنفس نوق الدادا اللي هستقبلها
               keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
-                // دي القيمه اللي جوه فيلد الاميل
                 email = value;
                 },
               decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
@@ -55,12 +51,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 8.0,
             ),
             TextField(
-              // خلي الباسورد يبق محخفي
               obscureText: true,
-              // خلي التكست يظهر ف النص
               textAlign: TextAlign.center,
               onChanged: (value) {
-                // دي القيمه اللي جوا فيلد الباسورد
                   password = value;
               },
               decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password'),
@@ -72,17 +65,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 btnName: 'Register',
                 btnColor: Colors.blueAccent,
                 onPressed:  () async{
-                  // ههندل اي ايرور يخص المصادقه ف هحط تراي وكاتش
                   try {
-                    //  عمل رجيستر لليوزر بالاميل والباسورد (دا للمصادقه)
-                    // وبما انه هيرجع فيوتشر هنحفظه ف المتغير دا علشان نستخدمه بعدين لما يخص المصادقه
+                    // هنعمل تسجيل دخول بداله الاميل والباسورد
+                    // الداله دي لو نجحت وسجلت ددخول اليوزر دا هيبق في كائن المصادقه هو اليوزر الحالي
+                    // بردو روح استقبله هناك
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
-                    // اتاكد ان كل حاجه تمام علشان تعمل الخطوه اللي بعد كدا
                     if (newUser != null) {
-                      // روح بق الاسكرين اللي هناك استقبل اليوزر
-                      //  هو اصلا المصادقه لو حصلت النيو يوزر
-                      //  دل هيتسجل في _auth علي انه  CurrentUser بمعني ان حد سجل دخول
                       Navigator.pushNamed(context, ChatScreen.id);
                     }
                   } catch (e) {

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chatting/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// عملت تعريفه هنا علشان اقدر اوصله من اي كلاس في الملف سواء
 final _fireStore = FirebaseFirestore.instance;
 
 
@@ -14,7 +13,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-
+  // هنعمل الكونترولر دا علشان نقدر نمسح الرساله
+  // اللي كتبنها في التكست فيد
+  // تتمسح بعد م بعتنها
+  final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
   String messageText;
@@ -66,6 +68,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      // هنا احنا بنقول ان كلاس التكست ادتنج كونترولر هيطبق علي
+                      // التكست فيلد دا
+                      controller: messageTextController,
                       onChanged: (value) {
                         messageText = value;
                       },
@@ -74,6 +79,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
+                      // اول ما تضغط علي الزرار دا امسح التكست فيلد
+                      messageTextController.clear();
                       _fireStore.collection('messages').add({
                         'text': messageText,
                         'sender': loggedInUser.email
@@ -94,7 +101,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
-// تنظيم الكود هعمل استيت ليس كلاص وانقل في اداه كامله
 class MessageStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:chatting/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 final _fireStore = FirebaseFirestore.instance;
-
+// دا اليوزر اللي عمل لوجن وبيكتب حاليا
+// حطيناه هنا علشان نقدر نوصله من اي مكان ف الملف دا
+User loggedInUser;
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chatScreen';
@@ -15,7 +17,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-  User loggedInUser;
+
   String messageText;
 
   @override
@@ -113,11 +115,20 @@ class MessageStream extends StatelessWidget {
         for (var massage in messages) {
 
           final messageText = massage.data()['text'];
+          // وللتذكره دا الاميل اللي مرفق مع الرساله لما اتبعتت
           final messageSender = massage.data()['sender'];
+
+          // دا الاميل بتاع اليوزر اللي لسا مسجل دخول
+          final currentUserEmail = loggedInUser.email;
 
           final messageWidget = MessageBubble(
             sender: messageSender,
             text: messageText,
+            // بدل ما اعمل شرط يتحقق تساوي الاميلين وابعت الناتج منهم صح او خطا
+            // بعمل هنا في نفس السطر
+            // طب التحقق دا اصلا لازمته ان اخلي رسايل الشخص اللي مسجل دخول كلها يمين
+            // واي رسايل جايه من اميله تاني تبق نحيه الشمال
+            isMe: currentUserEmail == messageSender,
           );
           messageWidgets.add(messageWidget);
         }
@@ -133,9 +144,13 @@ class MessageStream extends StatelessWidget {
 
 class MessageBubble extends StatelessWidget {
 
-  MessageBubble({this.sender, this.text});
+  MessageBubble({this.sender, this.text, this.isMe});
   final String sender;
   final String text;
+  // المتغير دا بيتسجل فيه صح لو الاميل اللي عامل لوجن بيساوي نفس الاميل اللي لسا مسجل دخول
+  // طب ليه احنا محاجين نفرق ؟
+  // علشان احنا هنفصل رسايل الشخص اللي لسا عامل لوجن عن اي رسايل تانيه مبعوته من شخص تاني
+  final bool isMe;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +158,8 @@ class MessageBubble extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
 
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        // تغير اتجاه خلفيه الكلام بناء علي الايميل
+      crossAxisAlignment:  isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
             sender,
@@ -153,16 +169,29 @@ class MessageBubble extends StatelessWidget {
             ),
           ),
           Material(
-          borderRadius: BorderRadius.circular(30.0),
+            // هنعدل الزوايا علشان يبق شكل الشات برسمه جميله
+            borderRadius: isMe
+                ? BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                bottomLeft: Radius.circular(30.0),
+                bottomRight: Radius.circular(30.0))
+                : BorderRadius.only(
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
+
             elevation: 4.0,
-            color: Colors.lightBlueAccent,
+            // تغير لون خلفيه الكلام بناء علي الايميل
+            color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
               child: Text(
                 '$text',
                 style: TextStyle(
                   fontSize: 15.0,
-                  color: Colors.white,
+                  // تغير لون الكلام بناء علي الايميل
+                  color: isMe ? Colors.white : Colors.black54,
                 ),
               ),
             ),

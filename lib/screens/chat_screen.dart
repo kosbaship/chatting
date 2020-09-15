@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:chatting/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 final _fireStore = FirebaseFirestore.instance;
-// دا اليوزر اللي عمل لوجن وبيكتب حاليا
-// حطيناه هنا علشان نقدر نوصله من اي مكان ف الملف دا
 User loggedInUser;
 
 class ChatScreen extends StatefulWidget {
@@ -17,7 +15,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-
   String messageText;
 
   @override
@@ -67,6 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+
                       controller: messageTextController,
                       onChanged: (value) {
                         messageText = value;
@@ -76,8 +74,14 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
+                      // دا الكلاس اللي بيجيب لينا التاريخ والوقت الاتنين
+                      // وانا هبعت مع كل رساله وقتهال علشان ارتبها بيها واعرضها للمستخدم
+                      DateTime sentMessageTime = DateTime.now();
+
                       messageTextController.clear();
                       _fireStore.collection('messages').add({
+                        // هضيف الدوكيومنت كولكشن دا ف الداتا علشان ارتب بيه الرسايل
+                        'timefororder': sentMessageTime,
                         'text': messageText,
                         'sender': loggedInUser.email
                       });
@@ -101,7 +105,8 @@ class MessageStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _fireStore.collection('messages').snapshots(),
+      // هستخدم داله اوردر باي علشان اختار انهي صفه هرتب الداتا علي قيمها
+      stream: _fireStore.collection('messages').orderBy('timefororder', descending: false).snapshots(),
       builder: (context, snapshot){
         List<MessageBubble> messageWidgets = [];
         if(!snapshot.hasData){
@@ -115,19 +120,13 @@ class MessageStream extends StatelessWidget {
         for (var massage in messages) {
 
           final messageText = massage.data()['text'];
-          // وللتذكره دا الاميل اللي مرفق مع الرساله لما اتبعتت
           final messageSender = massage.data()['sender'];
 
-          // دا الاميل بتاع اليوزر اللي لسا مسجل دخول
           final currentUserEmail = loggedInUser.email;
 
           final messageWidget = MessageBubble(
             sender: messageSender,
             text: messageText,
-            // بدل ما اعمل شرط يتحقق تساوي الاميلين وابعت الناتج منهم صح او خطا
-            // بعمل هنا في نفس السطر
-            // طب التحقق دا اصلا لازمته ان اخلي رسايل الشخص اللي مسجل دخول كلها يمين
-            // واي رسايل جايه من اميله تاني تبق نحيه الشمال
             isMe: currentUserEmail == messageSender,
           );
           messageWidgets.add(messageWidget);
@@ -147,9 +146,6 @@ class MessageBubble extends StatelessWidget {
   MessageBubble({this.sender, this.text, this.isMe});
   final String sender;
   final String text;
-  // المتغير دا بيتسجل فيه صح لو الاميل اللي عامل لوجن بيساوي نفس الاميل اللي لسا مسجل دخول
-  // طب ليه احنا محاجين نفرق ؟
-  // علشان احنا هنفصل رسايل الشخص اللي لسا عامل لوجن عن اي رسايل تانيه مبعوته من شخص تاني
   final bool isMe;
 
   @override
@@ -158,7 +154,6 @@ class MessageBubble extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
 
       child: Column(
-        // تغير اتجاه خلفيه الكلام بناء علي الايميل
       crossAxisAlignment:  isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
@@ -169,7 +164,6 @@ class MessageBubble extends StatelessWidget {
             ),
           ),
           Material(
-            // هنعدل الزوايا علشان يبق شكل الشات برسمه جميله
             borderRadius: isMe
                 ? BorderRadius.only(
                 topLeft: Radius.circular(30.0),
@@ -182,7 +176,6 @@ class MessageBubble extends StatelessWidget {
             ),
 
             elevation: 4.0,
-            // تغير لون خلفيه الكلام بناء علي الايميل
             color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
@@ -190,7 +183,6 @@ class MessageBubble extends StatelessWidget {
                 '$text',
                 style: TextStyle(
                   fontSize: 15.0,
-                  // تغير لون الكلام بناء علي الايميل
                   color: isMe ? Colors.white : Colors.black54,
                 ),
               ),

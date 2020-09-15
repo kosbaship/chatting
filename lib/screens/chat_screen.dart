@@ -56,47 +56,32 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // الاداه دي هتحول ليسته الاسناب شوت اللي عندنا لاداه فلاتر كل مره هيجي فيها داتا
-            // هيتعملها اعاده بناء كل مره في داتا بتيجي من الاستريم وبتعمل دا عن طريق ال ست استات
-            // نوع الداتا اللي حطيته هنا انا حطيته شبه الاسناب شت اللي تخص الفاير بيز
             StreamBuilder<QuerySnapshot>(
-              //له قيمتين مهمين الاوليني هو الاستريم بمعني اخر الداتا جايه منين
-              // داله الاسناب شوت دي (تخص فاير بيز) بتتصنط علي اللي بيحصل ف الكولكشن دا
             stream: _fireStore.collection('messages').snapshots(),
-              // التاني با البلدر وهو المنطق للي الاستريم هيتبعه
-              //  الأي سينك سناب شوت بيمثل اخر تفاعل حصل علي الاستريم
-              // القيمه التانيه ف البلد دا هي الاسناب شوت اللي هترجع ليا
-              // داله الاسناب شوت دي (تخص فلاتر بس هستخدم معاها دوال الفاير بيز) بتتصنط علي اللي بيحصل ف الكولكشن دا
               builder: (context, snapshot){
-                // بما اني هعرض الداتا بشكل بدائي في عمود
-                // هخلي كل عنصر ف الليسته دي عباره عن رساله
-                // طبعا هملاها من خلال اللوب
                 List<Text> messageWidgets = [];
-                if(snapshot.hasData){
-                  // دي الطريقه اللي بنوصل بيها للداتا جوه الاسناب شوت بتاعتنا
-                  //snapshot دا من الاستريم بيلدي
-                  //data دا من الفاير بيز
-                  //docs دي ليسته من الاسناب شوت اللي بيكون جواها دايرك الرسايل بتاعتنا
-                  // كل دا متعدل ومتزبط علشان نوع الداتا اللي حطيته انا ف الاستيرم بيلدر من البدايه
-                  final messages = snapshot.data.docs;
-                  // هتجيب العناصر من ليسته الراسايل اللي انا جايبه من الفاير بيز
-                  // وتحط كل عنصر في اليسته اللي فوق دي بالترتيب علشان نعرضها للمستخدم
-                  for (var massage in messages) {
-
-                    // كل عنصر ف الليسته اللي جايه ف الفاير بيز عباره عن ماب
-                    // مكون من مفتاح وقيمه هحط المفاتح علشان اخد القيمه
-                    final messageText = massage.data()['text'];
-                    final messageSender = massage.data()['sender'];
-
-                    // دي الطريقه اللي هيتعرض بيها العنصر جوه القايمه
-                    final messageWidget = Text('$messageText from $messageSender');
-                    // ضيف العنصر بشكله النهائي ف القايمه
-                    messageWidgets.add(messageWidget);
-                  }
+                // هنشوفلو مفيش داتا موجوده في الفاير استور هنعرض ابنر كدا يلف مكان الرسايل
+                // حد ما الرسايل تيجي من الداتا بيز
+                if(!snapshot.hasData){
+                  // بما ان الاستريم بلدي بيرجع اداه ف اهنرجع اداه جواها اسبنر عادي خالص
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.lightBlueAccent,
+                    ),
+                  );
                 }
-                // دا العمود اللي هيتعرض للمستخدم بشكل بدائي
+                // لو في داتا يبق الشرط اللي فوق دا مش هيتنفذ وهنجيبها كلها
+                // من قواعد البيانات ونتعامل معاها بقا زي تحت
+                final messages = snapshot.data.docs;
+                for (var massage in messages) {
+
+                  final messageText = massage.data()['text'];
+                  final messageSender = massage.data()['sender'];
+
+                  final messageWidget = Text('$messageText from $messageSender');
+                  messageWidgets.add(messageWidget);
+                }
                 return Column(
-                    // بما انه بياخد ليسته هحط فيه ليسته الرسايل اللي انا لسا بانيها خالا
                     children : messageWidgets
                 );
               },

@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chatting/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// عملت تعريفه هنا علشان اقدر اوصله من اي كلاس في الملف سواء
+final _fireStore = FirebaseFirestore.instance;
+
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chatScreen';
@@ -12,7 +15,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
 
-  final _fireStore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
   String messageText;
@@ -56,41 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            StreamBuilder<QuerySnapshot>(
-            stream: _fireStore.collection('messages').snapshots(),
-              builder: (context, snapshot){
-              // لازم تبقي ليسته من نفس نوع العناصر اللي هتتعرض
-                List<MessageBubble> messageWidgets = [];
-                if(!snapshot.hasData){
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.lightBlueAccent,
-                    ),
-                  );
-                }
-                final messages = snapshot.data.docs;
-                for (var massage in messages) {
-
-                  final messageText = massage.data()['text'];
-                  final messageSender = massage.data()['sender'];
-
-                  // دا العنصر اللي هيتعرض ف القائمه
-                  //م انا ببعتله ف الكونستراكتور بتاعه القيمتين اللي هستخدمهم
-                  // علشان يرتبهم ف طريقه العرض بمعرفته
-                  final messageWidget = MessageBubble(
-                    sender: messageSender,
-                    text: messageText,
-                  );
-                  messageWidgets.add(messageWidget);
-                }
-                return Expanded(
-                  // عمل القايمه اللي هيتحفظ فيها العناصر بدل عمود علشان تقبل الاسكرول
-                  child: ListView(
-                      children : messageWidgets
-                  ),
-                );
-              },
-            ),
+            MessageStream(),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -124,28 +92,58 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
-
 }
-// المفروض ان كل عنصر ف القائمه يبق تكست
-// فا احنا عاوزين نعدل في شكل العنصر ف هنعمل في اداه هنا لوحدها ونبق نستخدمها هناك
+
+// تنظيم الكود هعمل استيت ليس كلاص وانقل في اداه كامله
+class MessageStream extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _fireStore.collection('messages').snapshots(),
+      builder: (context, snapshot){
+        List<MessageBubble> messageWidgets = [];
+        if(!snapshot.hasData){
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.lightBlueAccent,
+            ),
+          );
+        }
+        final messages = snapshot.data.docs;
+        for (var massage in messages) {
+
+          final messageText = massage.data()['text'];
+          final messageSender = massage.data()['sender'];
+
+          final messageWidget = MessageBubble(
+            sender: messageSender,
+            text: messageText,
+          );
+          messageWidgets.add(messageWidget);
+        }
+        return Expanded(
+          child: ListView(
+              children : messageWidgets
+          ),
+        );
+      },
+    );
+  }
+}
+
 class MessageBubble extends StatelessWidget {
 
-  //هنا انا بستقبل القيم اللي جيه من الفاير بيز
-  // واعرضها بالشكل اللي علي مزاجي ف الاداه هنا
   MessageBubble({this.sender, this.text});
   final String sender;
   final String text;
 
   @override
   Widget build(BuildContext context) {
-    // طبعا انا بضيف البادنج علشان افصل ما بين الاجوات
     return Padding(
       padding: EdgeInsets.all(8.0),
 
       child: Column(
-        // هنخلي الرسايل كلها في جنب واحد
         crossAxisAlignment: CrossAxisAlignment.end,
-        // العمود دا هيعرض النص في شكل اسم الاميل فوق والرساله تحت
         children: [
           Text(
             sender,
@@ -154,11 +152,8 @@ class MessageBubble extends StatelessWidget {
               color: Colors.black54,
             ),
           ),
-          // انا بضيف اداه الماتريال فوق التكست علشان اقدر اغير الخلفيه بتاعته
-          // او بمعني تاني افصل له شكل خلفيه علي مزاجي
           Material(
           borderRadius: BorderRadius.circular(30.0),
-            // دي الخاصيه اللي بتحط ظل في الخلفيه
             elevation: 4.0,
             color: Colors.lightBlueAccent,
             child: Padding(

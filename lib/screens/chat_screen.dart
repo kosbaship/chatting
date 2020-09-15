@@ -60,18 +60,13 @@ class _ChatScreenState extends State<ChatScreen> {
             stream: _fireStore.collection('messages').snapshots(),
               builder: (context, snapshot){
                 List<Text> messageWidgets = [];
-                // هنشوفلو مفيش داتا موجوده في الفاير استور هنعرض ابنر كدا يلف مكان الرسايل
-                // حد ما الرسايل تيجي من الداتا بيز
                 if(!snapshot.hasData){
-                  // بما ان الاستريم بلدي بيرجع اداه ف اهنرجع اداه جواها اسبنر عادي خالص
                   return Center(
                     child: CircularProgressIndicator(
                       backgroundColor: Colors.lightBlueAccent,
                     ),
                   );
                 }
-                // لو في داتا يبق الشرط اللي فوق دا مش هيتنفذ وهنجيبها كلها
-                // من قواعد البيانات ونتعامل معاها بقا زي تحت
                 final messages = snapshot.data.docs;
                 for (var massage in messages) {
 
@@ -81,8 +76,14 @@ class _ChatScreenState extends State<ChatScreen> {
                   final messageWidget = Text('$messageText from $messageSender');
                   messageWidgets.add(messageWidget);
                 }
-                return Column(
-                    children : messageWidgets
+                // في وصف البرنامج الصفحه بتاعه الشات مكونه من عمود وكونتير تحت فيه
+                // مكان كتابه الرسايل وزرار الارسال
+                // اول حاجه هنعملها هنخلي اللي مع العمود دا علي نفس اللفل
+                // اكسباندد ودجت علشان تطبق كلام ابوها الاب صفه سباس بتوين
+                return Expanded(
+                  child: Column(
+                      children : messageWidgets
+                  ),
                 );
               },
             ),

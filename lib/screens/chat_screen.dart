@@ -74,13 +74,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      // دا الكلاس اللي بيجيب لينا التاريخ والوقت الاتنين
-                      // وانا هبعت مع كل رساله وقتهال علشان ارتبها بيها واعرضها للمستخدم
                       DateTime sentMessageTime = DateTime.now();
 
                       messageTextController.clear();
                       _fireStore.collection('messages').add({
-                        // هضيف الدوكيومنت كولكشن دا ف الداتا علشان ارتب بيه الرسايل
                         'timefororder': sentMessageTime,
                         'text': messageText,
                         'sender': loggedInUser.email
@@ -105,8 +102,8 @@ class MessageStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      // هستخدم داله اوردر باي علشان اختار انهي صفه هرتب الداتا علي قيمها
-      stream: _fireStore.collection('messages').orderBy('timefororder', descending: false).snapshots(),
+      // انا عكست اللسته ف هعكس الترتيب اللي بتيجي بيه الداتا علشان يبق ولا كاني عملت حالجه
+      stream: _fireStore.collection('messages').orderBy('timefororder', descending: true).snapshots(),
       builder: (context, snapshot){
         List<MessageBubble> messageWidgets = [];
         if(!snapshot.hasData){
@@ -133,6 +130,9 @@ class MessageStream extends StatelessWidget {
         }
         return Expanded(
           child: ListView(
+              // دي تعكس طريقه عرض الليسته يعني هتخلي العنصر الاخير الاول والاول الاخير
+              // الميزه التانيه اللي فيها هيا كانها بتعمل تحديث تلقائي
+              reverse: true,
               children : messageWidgets
           ),
         );

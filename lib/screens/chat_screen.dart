@@ -13,9 +13,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  // هنعمل الكونترولر دا علشان نقدر نمسح الرساله
-  // اللي كتبنها في التكست فيد
-  // تتمسح بعد م بعتنها
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
@@ -68,8 +65,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
-                      // هنا احنا بنقول ان كلاس التكست ادتنج كونترولر هيطبق علي
-                      // التكست فيلد دا
                       controller: messageTextController,
                       onChanged: (value) {
                         messageText = value;
@@ -79,7 +74,6 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      // اول ما تضغط علي الزرار دا امسح التكست فيلد
                       messageTextController.clear();
                       _fireStore.collection('messages').add({
                         'text': messageText,
